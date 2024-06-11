@@ -1,16 +1,15 @@
 #============================================================
 plaintext = open("plaintext.txt", "r", encoding="utf-8")
-print(plaintext)
+# print(plaintext)
 
 #conv list ke string 
 #conv string ke bytes
 plaintext = str(plaintext.read())
-print(type(plaintext))
-print(plaintext)
+# print(type(plaintext))
+# print(plaintext)
 
 #============================================================
 #membuat hash kunci
-
 import hashlib
 
 def create_key_128(key):
@@ -64,6 +63,8 @@ def divide_into_blocks(plaintext, block_size):
         blocks.append(block)
 
     return blocks
+print(plaintext)
+print(divide_into_blocks(plaintext, 16))
 
 #============================================================
 #fungsi melakukan xor
@@ -104,12 +105,11 @@ def ecb_xor_decrypt(encrypted_text, key):
     return "".join(result)
 
 #============================================================
-key_128=create_key_128("ini kunci sangat rahasia")
+# key_128=create_key_128("ini kunci sangat rahasia")
+# #melakukan enkripsi
+# encrypted_text = ecb_xor_encrypt(plaintext, key_128)
+# print(encrypted_text)
 
-#melakukan enkripsi
-encrypted_text = ecb_xor_encrypt(plaintext, key_128)
-print(encrypted_text)
-
-#melakukan dekripsi
-decrypted_text = ecb_xor_decrypt(encrypted_text, key_128)
-print(decrypted_text)
+# #melakukan dekripsi
+# decrypted_text = ecb_xor_decrypt(encrypted_text, key_128)
+# print(decrypted_text)
