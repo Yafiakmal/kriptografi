@@ -1,6 +1,7 @@
 #============================================================
 plaintext = open("plaintext.txt", "r", encoding="utf-8")
-plaintext = str(plaintext.read())
+plaintext = plaintext.read()
+print(plaintext)
 #============================================================
 #membuat hash kunci
 import hashlib
@@ -51,30 +52,24 @@ def divide_into_blocks(plaintext, block_size):
         blocks.append(block)
 
     return blocks
-# print(plaintext)
-# print(divide_into_blocks(plaintext, 16))
-
 #============================================================
 #fungsi melakukan xor
-def xor_encrypt(text, key):
+def xor_encrypt(plaintext, key):
     encrypted_text = ""
-    #sepanjang text block lakukan xor per karakter dengan key
-    for i in range(len(text)):
+    #sepanjang plaintext block lakukan xor per karakter dengan key
+    for i in range(len(plaintext)):
         #setiap karakter pada block plaintext akan diubah menjadi kode/angka unicode yang merepresentasikan sebuah karakter.
         #kemudian di xor dengan key
         #kemudian chr() untuk menjadikan 
-        encrypted_text += chr(ord(text[i]) ^ ord(key[i% len(key)]))
+        encrypted_text += chr(ord(plaintext[i]) ^ ord(key[i]))
     return encrypted_text
 
 
 def xor_decrypt(encrypted_text, key):
-
     decrypted_text = ""
 
     for i in range(len(encrypted_text)):
-
         decrypted_text += chr(ord(encrypted_text[i]) ^ ord(key[i % len(key)]))
-
     return decrypted_text
 #============================================================
 def ecb_xor_encrypt(plaintext, key):
@@ -87,10 +82,11 @@ def ecb_xor_encrypt(plaintext, key):
         i = add_padding(i)
         #hasil xor akan dimasukan ke dalam list result
         result.append(xor_encrypt(i, key))
-    return result
+    return "".join(result)
 
 #============================================================
 def ecb_xor_decrypt(encrypted_text, key):
+    encrypted_text = divide_into_blocks(encrypted_text,16)
     result = []
     #melakukan iterasi pada ciphertext yang berbentuk block
     for i in encrypted_text:
@@ -103,7 +99,7 @@ def ecb_xor_decrypt(encrypted_text, key):
 key_128=create_key_128("ini kunci sangat rahasia")
 #melakukan enkripsi
 encrypted_text = ecb_xor_encrypt(plaintext, key_128)
-print("hasil enkripsi : ", ("".join(encrypted_text)).encode())
+print("hasil enkripsi : ", (encrypted_text).encode())
 
 #melakukan dekripsi
 decrypted_text = ecb_xor_decrypt(encrypted_text, key_128)

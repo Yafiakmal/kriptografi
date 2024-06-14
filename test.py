@@ -1,6 +1,7 @@
 import base64
 
 def string_to_binary(text):
+    #mengubah karakter menjadi representasi 8bit
     return ''.join(format(ord(char), '08b') for char in text)
 
 def binary_to_string(binary):
